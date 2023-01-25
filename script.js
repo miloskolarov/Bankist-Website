@@ -1,5 +1,6 @@
 'use strict';
 
+///////////////////////////////////////
 // Modal window
 //selectors
 const modal = document.querySelector('.modal');
@@ -115,6 +116,15 @@ nav.addEventListener('mouseout', function (e) {
     logo.style.opacity = 1;
   }
 });
+
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<div class="dots__dot" data-slide="${i}"></div>`
+    );
+  });
+};
 
 /*
 //Sticky navigation
@@ -262,4 +272,24 @@ document.addEventListener('keydown', function (e) {
   console.log(e);
   if (e.key === 'ArrowLeft') prevSlide();
   if (e.key === 'ArrowRight') nextSlide();
+});
+
+createDots();
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    const { slide } = e.target.dataset;
+    goToSlide(slide);
+    activateDot(slide);
+  }
 });
