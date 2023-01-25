@@ -68,8 +68,6 @@ tabsContainer.addEventListener('click', function (e) {
 
 //Menu fade animation
 
-//Refactor the code
-
 nav.addEventListener('mouseover', function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
@@ -82,6 +80,7 @@ nav.addEventListener('mouseover', function (e) {
     logo.style.opacity = 0.5;
   }
 });
+
 nav.addEventListener('mouseout', function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
@@ -178,7 +177,7 @@ const goToSlide = function (slide) {
 
 goToSlide(0);
 
-//next slide
+//Next slide
 const nextSlide = function () {
   if (curSlide === maxSlide - 1) {
     curSlide = 0;
@@ -201,24 +200,13 @@ const prevSlide = function () {
 
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
-//-100%, 0%, 100%, 200%, 300%
 
-//Add keyboard
+//Change slide using keyboard:
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowLeft') prevSlide();
   if (e.key === 'ArrowRight') nextSlide();
 });
-
-const activateDot = function (slide) {
-  document
-    .querySelectorAll('.dots__dot')
-    .forEach(dot => dot.classList.remove('dots__dot--active'));
-
-  document
-    .querySelector(`.dots__dot[data-slide="${slide}"]`)
-    .classList.add('dots__dot--active');
-};
 
 dotContainer.addEventListener('click', function (e) {
   if (e.target.classList.contains('dots__dot')) {
