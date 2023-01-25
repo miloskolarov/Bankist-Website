@@ -14,6 +14,10 @@ const tabsContent = document.querySelectorAll('.operations__content');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 const imgTargets = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
 
 //Modal window
 
@@ -39,50 +43,24 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//Page navigation
-//NOt performance friendly, we are attaching function to every element
-// document.querySelectorAll('.nav__link').forEach(function (el) {
-//   el.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     console.log('LINK');
-
-//     const id = this.getAttribute('href');
-//     console.log(id);
-//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-//   });
-// });
-
-//1. Add event listener to common parent element
-//2. Determine what element originated the event
+//Smooth scrolling to a link
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-  //Matching strategy
-
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
-//Tabed component
+//Display active tab:
 
-// //bad practice, bad optimization:
-// tabs.forEach(t => t.addEventListener('click', () => console.log('TAB')));
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-
-  //guard clause
   if (!clicked) return;
-  //Remove active classes
-
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   clicked.classList.add('operations__tab--active');
-
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
-
-  //active content area
-
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
@@ -117,18 +95,7 @@ nav.addEventListener('mouseout', function (e) {
   }
 });
 
-/*
-//Sticky navigation
-//scroll event is not efficient and should be avoided
-const initialCoords = section1.getBoundingClientRect();
-
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
-  if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
-});
-*/
-//Alternative: INtersection observer API
+// Intersection observer API
 
 const obsCallback = function (entries, observer) {
   entries.forEach(entry => {});
@@ -138,9 +105,6 @@ const obsOptions = {
   root: null,
   threshold: [0, 0.2],
 };
-
-// const observer = new IntersectionObserver(obsCallback, obsOptions);
-// observer.observe(section1);
 
 const navHeight = nav.getBoundingClientRect().height;
 
@@ -200,16 +164,8 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
-//SLIDER
-//!!!REMOVE UNNECESARY HTML
-const slides = document.querySelectorAll('.slide');
-
 let curSlide = 0;
 const maxSlide = slides.length;
-
-const slider = document.querySelector('.slider');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
 
 slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
 //0%, 100%, 200%, 300%
