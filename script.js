@@ -117,15 +117,6 @@ nav.addEventListener('mouseout', function (e) {
   }
 });
 
-const createDots = function () {
-  slides.forEach(function (_, i) {
-    dotContainer.insertAdjacentHTML(
-      'beforeend',
-      `<div class="dots__dot" data-slide="${i}"></div>`
-    );
-  });
-};
-
 /*
 //Sticky navigation
 //scroll event is not efficient and should be avoided
@@ -273,8 +264,6 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowLeft') prevSlide();
   if (e.key === 'ArrowRight') nextSlide();
 });
-
-createDots();
 
 const activateDot = function (slide) {
   document
