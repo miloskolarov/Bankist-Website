@@ -163,11 +163,13 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
+// SLIDES
+
 let curSlide = 0;
+
 const maxSlide = slides.length;
 
 slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
-//0%, 100%, 200%, 300%
 
 const goToSlide = function (slide) {
   slides.forEach(
@@ -188,6 +190,7 @@ const nextSlide = function () {
   goToSlide(curSlide);
 };
 
+//Previous slide
 const prevSlide = function () {
   if (curSlide === 0) {
     curSlide = maxSlide - 1;
