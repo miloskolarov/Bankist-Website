@@ -1,8 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-//selectors
+//Selectors
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -10,6 +8,15 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const nav = document.querySelector('.nav');
 const section1 = document.querySelector('#section--1');
 const dotContainer = document.querySelector('.dots');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+//Modal window
+
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -49,28 +56,21 @@ document.addEventListener('keydown', function (e) {
 //2. Determine what element originated the event
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
-  console.log(e.target);
   e.preventDefault();
   //Matching strategy
 
   if (e.target.classList.contains('nav__link')) {
-    console.log('link');
-
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
 //Tabed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
 
 // //bad practice, bad optimization:
 // tabs.forEach(t => t.addEventListener('click', () => console.log('TAB')));
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-  console.log(clicked);
 
   //guard clause
   if (!clicked) return;
@@ -82,7 +82,7 @@ tabsContainer.addEventListener('click', function (e) {
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
 
   //active content area
-  console.log(clicked.dataset.tab);
+
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
@@ -131,9 +131,7 @@ window.addEventListener('scroll', function () {
 //Alternative: INtersection observer API
 
 const obsCallback = function (entries, observer) {
-  entries.forEach(entry => {
-    console.log(entry);
-  });
+  entries.forEach(entry => {});
 };
 
 const obsOptions = {
@@ -144,13 +142,10 @@ const obsOptions = {
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
 
-const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
@@ -164,7 +159,6 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 headerObserver.observe(header);
 
 //Reveal sections
-const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
   const [entry] = entries;
@@ -186,12 +180,8 @@ allSections.forEach(function (section) {
 
 //Lazy loading images
 
-const imgTargets = document.querySelectorAll('img[data-src]');
-console.log(imgTargets);
-
 const loadImg = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) return;
 
@@ -260,7 +250,6 @@ btnLeft.addEventListener('click', prevSlide);
 //Add keyboard
 
 document.addEventListener('keydown', function (e) {
-  console.log(e);
   if (e.key === 'ArrowLeft') prevSlide();
   if (e.key === 'ArrowRight') nextSlide();
 });
